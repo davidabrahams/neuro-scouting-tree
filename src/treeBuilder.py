@@ -53,6 +53,11 @@ def build_tree(layers, first_node):
     return tree
 
 
-#test the build_tree function, output should be [[1], [1, 1], [1, 2, 1, 1], [1, 3, 2, 3, 3, 2, 2, 1], [1, 4, 3, 5, 5, 5, 5, 6, 6, 5, 5, 4, 4, 3, 3, 1]]
-tree = build_tree(5, 1)
-print tree
+def print_tree(tree):
+    """
+    prints a tree with the given number of layers and first node
+    @param layers: the number of layers the tree contains
+    @param first_node: the top node in the tree
+    """
+    for layer in tree:
+        print layer
