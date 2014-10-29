@@ -1,4 +1,4 @@
-def next_line(prev_layer):
+def next_layer(prev_layer):
     """
     @param prev_layer: the previous line in the tree
     @return: next_layer: the next layer in the tree, computed based on the previous layer
@@ -48,16 +48,15 @@ def build_tree(layers, first_node):
 
     #loop through computing each layer of the tree based on the previous layer
     for i in range(0, layers - 1):
-        tree[i + 1] = next_line(tree[i])
+        tree[i + 1] = next_layer(tree[i])
 
     return tree
 
 
 def print_tree(tree):
     """
-    prints a tree with the given number of layers and first node
-    @param layers: the number of layers the tree contains
-    @param first_node: the top node in the tree
+    prints the tree layer by layer
+    @tree a list where each element is a list containing the nodes in a layer of the tree
     """
     for layer in tree:
         print layer
