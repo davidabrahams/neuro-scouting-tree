@@ -31,7 +31,27 @@ def next_line(prev_layer):
 
     return next_layer
 
-#test the next_line function, output should be [1, 3, 2, 4, 4, 3, 3, 1]
-test_layer = [1, 2, 2, 1]
-next_layer = next_line(test_layer)
-print next_layer
+
+def build_tree(layers, first_node):
+    """
+    @param layers: the number of layers the tree contains
+    @param first_node: the top node in the tree
+    @return: a list where each element is a list containing the nodes in a layer of the tree
+    """
+    #initialize the tree
+    tree = [None] * layers
+
+    #set the top node
+    if layers > 0:
+        tree[0] = [first_node]
+
+    #loop through computing each layer of the tree based on the previous layer
+    for i in range(1, layers):
+        tree[i] = next_line(tree[i - 1])
+
+    return tree
+
+
+#test the build_tree function, output should be [[1], [1, 1], [1, 2, 1, 1], [1, 3, 2, 3, 3, 2, 2, 1], [1, 4, 3, 5, 5, 5, 5, 6, 6, 5, 5, 4, 4, 3, 3, 1]]
+tree = build_tree(5, 1)
+print tree
