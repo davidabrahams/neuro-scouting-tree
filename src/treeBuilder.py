@@ -4,30 +4,31 @@ def next_line(prev_layer):
     @return: next_layer: the next layer in the tree, computed based on the previous layer
     """
 
-    #initialize the return variable
     next_layer = [0] * (2 * len(prev_layer))
 
-    #calculate the values of all the nodes in the next layer
-    for i in range(len(next_layer)):
-        #calculate the index of the parent
-        parent_index = i / 2
+    #parent is the current parent node, left_sib and right_sib are the parent's siblings
+    parent = 0
+    right_sib = prev_layer[0]
 
-        #if the node is at an even index then it is a left child
-        node_left = (i % 2 == 0)
+    #loop through the parent layer, stopping before the final node
+    for i in range(len(prev_layer) - 1):
 
-        #calculate the index of the respective sibling of the parent
-        if node_left:
-            parent_sib_index = parent_index - 1
-        else:
-            parent_sib_index = parent_index + 1
+        left_sib = parent #the previously examined parent becomes the left sibling
+        parent = right_sib #the previous right_sibling becomes the parent
+        right_sib = prev_layer[i + 1] #get the new right_sibling from the list
 
-        #calculate the new node in the tree
-        node = prev_layer[parent_index]
-        if (parent_sib_index > 0) and (parent_sib_index < len(prev_layer)):
-            node += prev_layer[parent_sib_index]
+        #generate the parent's children
+        next_layer[2 * i] = parent + left_sib
+        next_layer[2 * i + 1] = parent + right_sib
 
-        #place the node in the next layer
-        next_layer[i] = node
+    #the final parent is a special case where the right sibling does not exist
+    left_sib = parent
+    parent = right_sib
+    right_sib = 0
+
+    #generate the final pair of children
+    next_layer[len(next_layer) - 2] = parent + left_sib
+    next_layer[len(next_layer) - 1] = parent + right_sib
 
     return next_layer
 
@@ -46,8 +47,8 @@ def build_tree(layers, first_node):
         tree[0] = [first_node]
 
     #loop through computing each layer of the tree based on the previous layer
-    for i in range(1, layers):
-        tree[i] = next_line(tree[i - 1])
+    for i in range(0, layers - 1):
+        tree[i + 1] = next_line(tree[i])
 
     return tree
 
