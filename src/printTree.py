@@ -1,16 +1,11 @@
-import sys
+from treeBuilder import build_tree
 
-#read the number of layers the tree will have from the input argument
-layers = int(sys.argv[1])
+#prompt the user for the number of layers and the first node
+layers = int(raw_input('How many layers would you like the tree to have? >>>'))
+first_node = int(raw_input('What would you like the topmost value of the tree to be? >>>'))
 
-#initialize the tree and set the starting node
-tree = [None] * layers
-if layers > 0:
-    tree[0] = [1]
-
-#generate the tree
-for i in range(1, layers):
-    tree[i] = [1] * (2 * len(tree[i - 1]))
+#create the tree
+tree = build_tree(layers, first_node)
 
 #print the tree
 print(tree)
